@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ManageUserController extends Controller
 {
@@ -13,7 +16,8 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        return view();
+
+        return view('users.viewusers');
     }
 
     /**
@@ -23,7 +27,8 @@ class ManageUserController extends Controller
      */
     public function create()
     {
-        //
+        $role = Role::pluck('role','id')->all();
+        return view('users.addusers',compact('role'));
     }
 
     /**
@@ -80,5 +85,17 @@ class ManageUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function viewUsers(){
+
+        return view('users.viewusers');
+    }
+    public function get_datatable(){
+        return DataTables::of(User::query())->make(true);
+    }
+
+    public function description($id){
+        $book = User::findOrFail($id);
+        return view('books.description')->with(compact('book'));
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+    <link rel="icon" href={{asset('../public/images/pclogo.png')}} sizes="16x16">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -112,19 +112,21 @@
             <div class="dropdown-menu" aria-labelledby="pagesDropdown">
                 <h6 class="dropdown-header">Manage Books:</h6>
                 <a class="dropdown-item" href={{route('books.create')}}>Add Books</a>
-                <a class="dropdown-item" href="register.html">Register</a>
-                <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-                <div class="dropdown-divider"></div>
-                <h6 class="dropdown-header">Other Pages:</h6>
-                <a class="dropdown-item" href="404.html">404 Page</a>
-                <a class="dropdown-item" href="blank.html">Blank Page</a>
+                <a class="dropdown-item" href={{url('/view')}}>View Books</a>
             </div>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Users</span>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                <h6 class="dropdown-header">Manage Users:</h6>
+                <a class="dropdown-item" href={{route('users.create')}}>Add User</a>
+                <a class="dropdown-item" href={{url('/viewusers')}}>View User</a>
+
+            </div>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="tables.html">
@@ -158,7 +160,7 @@
     <footer class="sticky-footer">
         <div class="container my-auto">
             <div class="copyright text-center my-auto">
-                <span>Copyright © Your Website 2018</span>
+                <span>Pacific InterContinental College © pic.edu.ph 2018</span>
             </div>
         </div>
     </footer>
@@ -166,7 +168,6 @@
 </div>
 <!-- /.content-wrapper -->
 
-</div>
 <!-- /#wrapper -->
 
 <!-- Scroll to Top Button-->
@@ -195,7 +196,7 @@
 
 <!-- Bootstrap core JavaScript-->
 <script src={{asset('vendor/jquery/jquery.min.js')}}></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+{{--<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>--}}
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Core plugin JavaScript-->
@@ -203,8 +204,11 @@
 
 <!-- Page level plugin JavaScript-->
 <script src="vendor/chart.js/Chart.min.js"></script>
-<script src="vendor/datatables/jquery.dataTables.js"></script>
-<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+
+<script src='{{asset('vendor/datatables/jquery.dataTables.js')}}'></script>
+
+<script src='{{asset('vendor/datatables/dataTables.bootstrap4.js')}}'></script>
 
 <!-- Custom scripts for all pages-->
 <script src="js/sb-admin.min.js"></script>

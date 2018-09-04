@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Book;
 use App\Ebook;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+
 
 class ManageBookController extends Controller
 {
@@ -15,7 +17,8 @@ class ManageBookController extends Controller
      */
     public function index()
     {
-        return view('books.viewbooks');
+
+//        return view('books.viewbooks');
     }
 
     /**
@@ -93,4 +96,18 @@ class ManageBookController extends Controller
     {
         //
     }
+    public function viewBooks(){
+
+        return view('books.viewbooks');
+    }
+    public function get_datatable(){
+        return DataTables::of(Book::query()->orderByDesc('id'))->make(true);
+    }
+
+    public function description($id){
+        $book = Book::findOrFail($id);
+        return view('books.description')->with(compact('book'));
+    }
+
+
 }
