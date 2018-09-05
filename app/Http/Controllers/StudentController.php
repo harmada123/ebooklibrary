@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
-use App\Ebook;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use App\Role;
+use App\User;
 
-
-class ManageBookController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,7 @@ class ManageBookController extends Controller
      */
     public function index()
     {
-
-//        return view('books.viewbooks');
+        return view('student.index');
     }
 
     /**
@@ -28,7 +25,7 @@ class ManageBookController extends Controller
      */
     public function create()
     {
-        return view('books.addbooks');
+        //
     }
 
     /**
@@ -39,17 +36,7 @@ class ManageBookController extends Controller
      */
     public function store(Request $request)
     {
-
-        $input = $request->all();
-        if($file = $request->file('book_id')){
-        $name = time().$file->getClientOriginalName();
-        $file->move('ebooks',$name);
-        $book = Ebook::create(['file'=>$name]);
-        $input['file'] = $book->id;
-        }
-        Book::create($input);
-        return redirect('/home');
-
+        //
     }
 
     /**
@@ -71,7 +58,9 @@ class ManageBookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::findOrFail($id);
+        $role = Role::pluck('role','id')->all();
+        return view('users.usersettings',compact('users','role'));
     }
 
     /**
@@ -96,22 +85,4 @@ class ManageBookController extends Controller
     {
         //
     }
-    public function viewBooks(){
-
-        return view('books.viewbooks');
-    }
-    public function get_datatable(){
-        return DataTables::of(Book::query()->orderByDesc('id'))->make(true);
-    }
-
-    public function description($id){
-        $book = Book::findOrFail($id);
-        return view('books.description')->with(compact('book'));
-    }
-    public function bookDescription($id){
-        $book = Book::findOrFail($id);
-        return view('books.bookdescription')->with(compact('book'));
-    }
-
-
 }

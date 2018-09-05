@@ -20,20 +20,23 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 Auth::routes();
 
+
+Route::group(['middleware'=>'admin'],function (){
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::resource('/books','ManageBookController');
+    Route::get('/viewusers','ManageUserController@viewUsers');
+    Route::get('view','ManageBookController@viewBooks');
+    Route::get('/description/{id}','ManageBookController@description');
+});
+
 Route::resource('/users','ManageUserController');
-Route::resource('/books','ManageBookController');
-
-
-Route::get('/viewusers','ManageUserController@viewUsers');
-Route::get('/viewusers/get_datatable','ManageUserController@get_datatable');
-
-Route::get('view','ManageBookController@viewBooks');
 Route::get('view/get_datatable', 'ManageBookController@get_datatable');
-Route::get('/description/{id}','ManageBookController@description');
-
-
+Route::get('/viewusers/get_datatable','ManageUserController@get_datatable');
+Route::get('/bookdescription/{id}','ManageBookController@bookDescription');
+Route::resource('/student','StudentController');
 Route::resource('/profile','UsersController');
