@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use Illuminate\Http\Request;
+use App\User;
+use App\Photo;
 
 class UsersController extends Controller
 {
@@ -56,7 +59,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::findOrFail($id);
+        $role = Role::pluck('role','id')->all();
+        return view('users.settings',compact('users','role'));
     }
 
     /**
@@ -68,7 +73,22 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        if(trim($request->password)==''){
+            $input = $request->except('password');
+        }
+        else{
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
+
+        if($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        return redirect('home');
     }
 
     /**

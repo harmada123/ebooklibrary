@@ -34,3 +34,6 @@ Route::get('/viewusers/get_datatable','ManageUserController@get_datatable');
 Route::get('view','ManageBookController@viewBooks');
 Route::get('view/get_datatable', 'ManageBookController@get_datatable');
 Route::get('/description/{id}','ManageBookController@description');
+
+
+Route::resource('/profile','UsersController');

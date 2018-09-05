@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Photo;
 use App\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Compound;
 use Yajra\DataTables\DataTables;
 
 class ManageUserController extends Controller
@@ -39,7 +41,21 @@ class ManageUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(trim($request->password)==''){
+            $input = $request->except('password');
+        }
+        else{
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
+
+        if($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        User::create($input);
     }
 
     /**
@@ -61,7 +77,10 @@ class ManageUserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::findOrFail($id);
+        $role = Role::pluck('role','id')->all();
+        return view('users.edituser',compact('users','role'));
+
     }
 
     /**
@@ -73,7 +92,23 @@ class ManageUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        if(trim($request->password)==''){
+            $input = $request->except('password');
+        }
+        else{
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
+
+        if($file = $request->file('photo_id')){
+            $name = time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo = Photo::create(['file'=>$name]);
+            $input['photo_id'] = $photo->id;
+        }
+        $user->update($input);
+        return redirect('home/');
     }
 
     /**
@@ -91,7 +126,8 @@ class ManageUserController extends Controller
         return view('users.viewusers');
     }
     public function get_datatable(){
-        return DataTables::of(User::query())->make(true);
+        $users = Role::join('users','roles.id','=','users.role_id')->select(['users.id','users.email','users.name','roles.role']);
+        return DataTables::of($users)->make(true);
     }
 
     public function description($id){

@@ -7,7 +7,7 @@
         </div>
         <div class="form-group">
             {!! Form::label('email','Email') !!}
-            {!! Form::text('author',null,['class'=>'form-control','placeholder'=>'email@pic.edu.ph']) !!}
+            {!! Form::text('email',null,['class'=>'form-control','placeholder'=>'email@pic.edu.ph']) !!}
         </div>
         <div class="form-group">
             {{Form::label('role_id','Job Role:')}}

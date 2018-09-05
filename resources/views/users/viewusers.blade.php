@@ -30,13 +30,13 @@
                 serverSide: true,
                 ajax: '/librarywithupload/public/viewusers/get_datatable',
                 columns : [
-                    {data: 'id'},
-                    {data: 'name'},
-                    {data: 'email'},
-                    {data: 'role_id',
+                    {data: 'id', name:'users.id'},
+                    {data: 'name',name:'users.name'},
+                    {data: 'email',name:'users.email'},
+                    {data: 'role',name:'roles.role',
                         "render": function(data, type, row, meta){
                             if(type === 'display'){
-                                data = '<a href="' + 'description/'+ row.id + '">' + data + '</a>';
+                                data = '<a href="' + 'users/'+ row.id + '/edit'+ '">' + data + '</a>';
                             }
 
                             return data;

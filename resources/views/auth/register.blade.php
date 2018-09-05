@@ -37,6 +37,9 @@
                                     </span>
                                 @endif
                             </div>
+                            <div class="col-md-6">
+                                <input id="role_id" type="hidden" class="form-control" name="role_id" value="2" >
+                            </div>
                         </div>
 
                         <div class="form-group row">
